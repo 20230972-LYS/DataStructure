@@ -13,16 +13,16 @@ void deleteStudent(int* scores, int* size, int studentNumber);
 int main() {
     int* scores;
     int size = 30;
-    int capacity = 30; 
+    int capacity = 30;
     int choice, studentNumber;
 
     scores = (int*)malloc(capacity * sizeof(int));  //정수 30개 담을 수 있는 배열을 직접 만드는 것 
-    if (!scores) { 
-        printf("allocation error\n"); 
+    if (!scores) {
+        printf("allocation error\n");
         return 1;                           //메모리 생성 실패 확인
     }
-	srand(time(0));  //랜덤 숫자 “섞기” 초기화
-	for (int i = 0; i < size;i++) 
+    srand(time(0));  //랜덤 숫자 “섞기” 초기화
+    for (int i = 0; i < size;i++)
         scores[i] = rand() % 101;
     printf("입력 완료\n");
 
@@ -33,64 +33,64 @@ int main() {
         printf("3. 학생정보 검색\n");
         printf("4. 학생정보 출력(옵션 : 0, 1, 2)\n");
         printf("5. 프로그램 종료\n");
-		printf("선택 : ");
+        printf("선택 : ");
         scanf("%d", &choice);
         system("cls"); //화면 지우기
 
-        switch (choice) {   
-            case 1:
-                if (capacity - size < 5) {
-                    capacity += 10;
-					int *newScores = realloc(scores, capacity * sizeof(int)); //메모리 재할당
-                    if (!scores) {
-						printf("reallocation error\n");
-                        return 1;
-                    }   
-					scores = newScores; //새로운 메모리 주소로 업데이트
+        switch (choice) {
+        case 1:
+            if (capacity - size < 5) {
+                capacity += 10;
+                int* newScores = realloc(scores, capacity * sizeof(int)); //메모리 재할당
+                if (!scores) {
+                    printf("reallocation error\n");
+                    return 1;
                 }
-
-                int newScore = rand() % 101;
-                scores[size] = newScore; //새로운 학생 점수 추가
-                size++;
-                printf("새로운 학생 추가 : 번호- %d, 점수-%d\n", size, newScore);
-
-                break;
-
-            case 2:
-				printf("삭제할 학생 번호 입력(1 ~%d): ", size);
-				scanf("%d", &studentNumber);
-				deleteStudent(scores, &size, studentNumber);
-
-                break;
-
-            case 3:
-                printf("검색할 학생 번호 입력(1 ~%d): ", size);
-                scanf("%d", &studentNumber);
-                int score = getStudentScore(scores, size, studentNumber);
-                if (score != -1) printf("%d번 학생 점수 : %d\n", studentNumber-1, score);
-                else printf("해당 학생은 없는 학생입니다.\n");  
-
-                break;
-
-            case 4: {
-                int option;
-				printf("옵션 선택: 0-평균 이상 점수, 1-평균 미만 점수, 2-모든 점수\n");
-                printf("선택 : ");
-                scanf("%d", &option);
-                double average = calculateAverage(scores, size);
-                printScores(scores, size, average, option);
-
-                break;
+                scores = newScores; //새로운 메모리 주소로 업데이트
             }
-            case 5:
-                free(scores);
-				printf("프로그램 종료\n");
-                return 0;
-               
-            default:
-                printf("잘못된 입력\n");
-                break;
-               
+
+            int newScore = rand() % 101;
+            scores[size] = newScore; //새로운 학생 점수 추가
+            size++;
+            printf("새로운 학생 추가 : 번호- %d, 점수-%d\n", size, newScore);
+
+            break;
+
+        case 2:
+            printf("삭제할 학생 번호 입력(1 ~%d): ", size);
+            scanf("%d", &studentNumber);
+            deleteStudent(scores, &size, studentNumber);
+
+            break;
+
+        case 3:
+            printf("검색할 학생 번호 입력(1 ~%d): ", size);
+            scanf("%d", &studentNumber);
+            int score = getStudentScore(scores, size, studentNumber);
+            if (score != -1) printf("%d번 학생 점수 : %d\n", studentNumber, score);
+            else printf("해당 학생은 없는 학생입니다.\n");
+
+            break;
+
+        case 4: {
+            int option;
+            printf("옵션 선택: 0-평균 이상 점수, 1-평균 미만 점수, 2-모든 점수\n");
+            printf("선택 : ");
+            scanf("%d", &option);
+            double average = calculateAverage(scores, size);
+            printScores(scores, size, average, option);
+
+            break;
+        }
+        case 5:
+            free(scores);
+            printf("프로그램 종료\n");
+            return 0;
+
+        default:
+            printf("잘못된 입력\n");
+            break;
+
 
 
         }
@@ -112,7 +112,7 @@ void deleteStudent(int* scores, int size, int studentNumber) {
 
     }
 }
-   
+
 // 평균 계산 함수
 double calculateAverage(int scores[], int size) {
     int sum = 0;
@@ -136,32 +136,32 @@ int getStudentScore(int scores[], int size, int studentNumber) {
 //평균 이상의 점수와 평균 미만의 점수를 출력하는 함수
 void printScores(int scores[], int size, double average, int option) {
     switch (option) {
-        case 0: // 평균 이상의 점수 출력
-            printf("평균 이상의 점수:\n");
-            for (int i = 0; i < size; i++) {
-                if (scores[i] >= average) {
-                    printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
-                }
-            }
-            printf("\n");
-            break;
-        case 1: // 평균 미만의 점수 출력
-            printf("평균 미만의 점수:\n");
-            for (int i = 0; i < size; i++) {
-                if (scores[i] < average) {
-                    printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
-                }
-            }
-            printf("\n");
-            break;
-        case 2: // 모든 학생 출력
-            printf("모든 학생:\n"); 
-            for (int i = 0; i < size; i++) {
+    case 0: // 평균 이상의 점수 출력
+        printf("평균 이상의 점수:\n");
+        for (int i = 0; i < size; i++) {
+            if (scores[i] >= average) {
                 printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
             }
-            printf("\n");
-            break;
-        default: // error
-            printf("유효하지 않은 옵션입니다.\n");
-	}
+        }
+        printf("\n");
+        break;
+    case 1: // 평균 미만의 점수 출력
+        printf("평균 미만의 점수:\n");
+        for (int i = 0; i < size; i++) {
+            if (scores[i] < average) {
+                printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
+            }
+        }
+        printf("\n");
+        break;
+    case 2: // 모든 학생 출력
+        printf("모든 학생:\n");
+        for (int i = 0; i < size; i++) {
+            printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
+        }
+        printf("\n");
+        break;
+    default: // error
+        printf("유효하지 않은 옵션입니다.\n");
+    }
 }
