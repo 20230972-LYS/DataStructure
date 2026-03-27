@@ -157,6 +157,7 @@ void printScores(int scores[], int size, double average, int option) {
     case 2: // 모든 학생 출력
         printf("모든 학생:\n");
         for (int i = 0; i < size; i++) {
+			if (scores[i] != -1)
             printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
         }
         printf("\n");
