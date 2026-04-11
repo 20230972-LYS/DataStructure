@@ -3,12 +3,72 @@
 #include <stdlib.h>
 #include <time.h>
 
-// 함수 선언
-double calculateAverage(int scores[], int size);
-int getStudentScore(int scores[], int size, int studentNumber);
-void printScores(int scores[], int size, double average, int option);
-void deleteStudent(int* scores, int* size, int studentNumber);
+void deleteStudent(int* scores, int size, int studentNumber) {
+    if (studentNumber < 1 || studentNumber > size) {
+        printf("학생번호 오류\n");
+    }
+    else if (scores[studentNumber - 1] == -1) 
+        printf("없는 학생입니다. \n");
+    else {
+        scores[studentNumber - 1] = -1;
+        printf("%d 학생 삭제완료\n", studentNumber);
 
+    }
+}
+
+// 평균 계산 함수
+double calculateAverage(int scores[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += scores[i];
+    }
+    return sum / (double)size;
+}
+
+// 특정 학생 점수 검색 함수
+int getStudentScore(int scores[], int size, int studentNumber) {
+    if (studentNumber >= 1 && studentNumber <= size) {
+        return scores[studentNumber - 1];
+    }
+    else {
+        return -1; // 유효하지 않은 학생 번호
+    }
+
+}
+
+//평균 이상의 점수와 평균 미만의 점수를 출력하는 함수
+void printScores(int scores[], int size, double average, int option) {
+    switch (option) {
+    case 0: // 평균 이상의 점수 출력
+        printf("평균 이상의 점수:\n");
+        for (int i = 0; i < size; i++) {
+            if (scores[i] >= average) {
+                printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
+            }
+        }
+        printf("\n");
+        break;
+    case 1: // 평균 미만의 점수 출력
+        printf("평균 미만의 점수:\n");
+        for (int i = 0; i < size; i++) {
+            if (scores[i] < average) {
+                printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
+            }
+        }
+        printf("\n");
+        break;
+    case 2: // 모든 학생 출력
+        printf("모든 학생:\n");
+        for (int i = 0; i < size; i++) {
+            if (scores[i] != -1)
+                printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
+        }
+        printf("\n");
+        break;
+    default: // error
+        printf("유효하지 않은 옵션입니다.\n");
+    }
+}
 
 int main() {
     int* scores;
@@ -90,79 +150,7 @@ int main() {
         default:
             printf("잘못된 입력\n");
             break;
-
-
-
         }
     }
-
-
-
     return 0;
-
-}
-void deleteStudent(int* scores, int size, int studentNumber) {
-    if (studentNumber < 1 || studentNumber > size) {
-        printf("학생번호 오류\n");
-    }
-    if (scores[studentNumber - 1] == -1) printf("없는 학생입니다. \n");
-    else {
-        scores[studentNumber - 1] = -1;
-        printf("%d 학생 삭제완료\n", studentNumber);
-
-    }
-}
-
-// 평균 계산 함수
-double calculateAverage(int scores[], int size) {
-    int sum = 0;
-    for (int i = 0; i < size; i++) {
-        sum += scores[i];
-    }
-    return sum / (double)size;
-}
-
-// 특정 학생 점수 검색 함수
-int getStudentScore(int scores[], int size, int studentNumber) {
-    if (studentNumber >= 1 && studentNumber <= size) {
-        return scores[studentNumber - 1];
-    }
-    else {
-        return -1; // 유효하지 않은 학생 번호
-    }
-
-}
-
-//평균 이상의 점수와 평균 미만의 점수를 출력하는 함수
-void printScores(int scores[], int size, double average, int option) {
-    switch (option) {
-    case 0: // 평균 이상의 점수 출력
-        printf("평균 이상의 점수:\n");
-        for (int i = 0; i < size; i++) {
-            if (scores[i] >= average) {
-                printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
-            }
-        }
-        printf("\n");
-        break;
-    case 1: // 평균 미만의 점수 출력
-        printf("평균 미만의 점수:\n");
-        for (int i = 0; i < size; i++) {
-            if (scores[i] < average) {
-                printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
-            }
-        }
-        printf("\n");
-        break;
-    case 2: // 모든 학생 출력
-        printf("모든 학생:\n");
-        for (int i = 0; i < size; i++) {
-			if (scores[i] != -1)
-            printf("학생 번호 : %d, 점수: %d\n", i + 1, scores[i]);
-        }
-        printf("\n");
-        break;
-    default: // error
-        printf("유효하지 않은 옵션입니다.\n");
-    }
 }
