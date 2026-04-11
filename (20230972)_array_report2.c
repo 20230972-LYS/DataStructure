@@ -85,7 +85,6 @@ int main() {
     srand(time(0));  //랜덤 숫자 “섞기” 초기화
     for (int i = 0; i < size;i++)
         scores[i] = rand() % 101;
-    printf("입력 완료\n");
 
     while (1) {
         printf(" --- 학생 성적 관리 프로그램 --- \n");
