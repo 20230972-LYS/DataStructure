@@ -55,7 +55,7 @@ void printScores(int scores[], int size, int option,double average) {
         printf("유효하지 않은 옵션입니다.\n");
     }
 }
-
+ 
 
 int main() {
     int scores[30]; // 30명의 학생 성적 저장
