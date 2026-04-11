@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+//학생 삭제 함수
 void deleteStudent(int* scores, int size, int studentNumber) {
     if (studentNumber < 1 || studentNumber > size) {
         printf("학생번호 오류\n");
